@@ -56,30 +56,32 @@ Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
 
 float temp;
 void setup(void) {
-  tft.initR(INITR_BLACKTAB);  
+  tft.initR(INITR_BLACKTAB);
+  tft.fillScreen(ST7735_BLACK);  
+  tft.setCursor(0, 0);
+  tft.setTextColor(ST7735_RED);
+  tft.setTextSize(1);
+  tft.print("Inside [C]:");
+  
   sensors.begin();
   sensors.setResolution(insideThermometer, 12);
 }
 
 void loop() {
+
   sensors.requestTemperatures();
+  
+  tft.setTextColor(ST7735_BLACK);
+  tft.setCursor(80, 0);
+  tft.print(temp);
+  
   temp = sensors.getTempC(insideThermometer);
-  delay(2000);
   
-  tft.fillScreen(ST7735_BLACK);
-  
-  tft.setCursor(0, 0);
-  
-  tft.setTextColor(ST7735_BLUE);
-  tft.setTextSize(0);
-  tft.println(">>>TEMPERATURE<<<");
   tft.setTextColor(ST7735_RED);
   tft.setTextSize(1);
-  tft.print("Inside : ");
-  
+  tft.setCursor(80, 0);
   tft.print(temp);
-  tft.println(" [C]\r\n");
-    
+  
 }
 
 
